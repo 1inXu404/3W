@@ -1,5 +1,5 @@
-import os
 import pandas as pd
+from pathlib import Path
 
 
 def load_csv(
@@ -17,7 +17,7 @@ def load_csv(
     Returns:
         pd.DataFrame: The loaded DataFrame with selected columns.
     """
-    if not os.path.isfile(file_path):
+    if not Path(file_path).is_file():
         raise FileNotFoundError(f"The file '{file_path}' does not exist.")
 
     if not isinstance(column_names, list) or not all(

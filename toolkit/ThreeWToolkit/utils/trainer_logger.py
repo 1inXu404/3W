@@ -1,4 +1,3 @@
-import os
 import json
 import pickle
 import logging
@@ -63,12 +62,13 @@ class TrainerLogger:
         if not progress_log:
             raise ValueError("progress_log must be a non-empty dictionary")
 
-        os.makedirs(log_dir, exist_ok=True)
+        log_dir_path = Path(log_dir)
+        log_dir_path.mkdir(parents=True, exist_ok=True)
 
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         extension = ".json" if file_format == "json" else ".pkl"
         filename = f"log_{timestamp}{extension}"
-        file_path = os.path.join(log_dir, filename)
+        file_path = log_dir_path / filename
 
         try:
             if file_format == "json":
@@ -83,4 +83,4 @@ class TrainerLogger:
             logger.error("Failed to save optimization progress: %s", e)
             raise
 
-        return file_path
+        return str(file_path)
