@@ -1,6 +1,6 @@
 import pandas as pd
 
-from typing import Literal, Optional
+from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, ValidationInfo, field_validator
 
 
@@ -124,7 +124,7 @@ class RenameColumnsConfig(BaseModel):
         Returns:
             dict[str, str]: The validated columns_map.
         """
-        df: Optional[pd.DataFrame] = info.data.get("data")
+        df: pd.DataFrame | None = info.data.get("data")
         if df is not None:
             missing = [col for col in columns_map if col not in df.columns]
             if missing:

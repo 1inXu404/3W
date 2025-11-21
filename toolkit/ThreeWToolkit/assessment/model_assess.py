@@ -42,7 +42,7 @@ class ModelAssessment(BaseStep):
     Attributes:
         config (ModelAssessmentConfig): The assessment configuration.
         results (dict[str, Any]): Dictionary storing the latest evaluation results.
-        report_doc (Optional[Document]): Generated LaTeX report document.
+        report_doc (Document | None): Generated LaTeX report document.
         metric_functions (dict): Mapping of metric names to their calculation functions.
 
     Example:

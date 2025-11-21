@@ -10,7 +10,11 @@ from typing import Iterable, Any, TypeAlias, Callable
 from pydantic import Field, field_validator
 
 # Type alias for PyTorch model parameters
-ParamsT: TypeAlias = Iterable[torch.Tensor] | Iterable[dict[str, Any]] | Iterable[tuple[str, torch.Tensor]]
+ParamsT: TypeAlias = (
+    Iterable[torch.Tensor]
+    | Iterable[dict[str, Any]]
+    | Iterable[tuple[str, torch.Tensor]]
+)
 
 
 class MLPConfig(ModelsConfig):

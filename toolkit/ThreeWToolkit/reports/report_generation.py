@@ -3,7 +3,7 @@ import pandas as pd
 import jinja2
 
 from pathlib import Path
-from typing import Any, Dict, Callable, Optional
+from typing import Any, Dict, Callable
 
 from pylatex import Document, Section, Command, Center, Itemize
 from pylatex.utils import NoEscape
@@ -74,7 +74,7 @@ class ReportGeneration:
         y_test: pd.Series,
         predictions: pd.Series,
         calculated_metrics: dict,
-        plot_config: Optional[dict],
+        plot_config: dict | None,
         title: str,
         author: str = "3W Toolkit Report",
         latex_dir: Path = LATEX_DIR,
@@ -95,7 +95,7 @@ class ReportGeneration:
             y_test (pd.Series): The testing target data.
             predictions (pd.Series): The model's predictions on the test set.
             calculated_metrics (dict): A dictionary of pre-calculated performance metrics.
-            plot_config (Optional[dict]): A dictionary defining the plots to be
+            plot_config (dict | None): A dictionary defining the plots to be
                 included in the report. If None, an empty dictionary is used.
             title (str): The title of the report.
             author (str, optional): The author of the report.
