@@ -3,7 +3,7 @@ import json
 import pickle
 import logging
 from datetime import datetime
-from typing import Dict, Any, Union, Optional
+from typing import Any
 from pathlib import Path
 
 
@@ -17,7 +17,7 @@ class TrainerLogger:
     SUPPORTED_FORMATS = {"json", "pickle"}
 
     # Class-level logger to avoid duplicate handlers
-    _logger: Optional[logging.Logger] = None
+    _logger: logging.Logger | None = None
 
     @classmethod
     def _get_logger(cls) -> logging.Logger:
@@ -37,8 +37,8 @@ class TrainerLogger:
     @classmethod
     def log_optimization_progress(
         cls,
-        progress_log: Dict[str, Any],
-        log_dir: Union[str, Path] = "logs",
+        progress_log: dict[str, Any],
+        log_dir: Path | str = "logs",
         file_format: str = "json",
     ) -> str:
         """

@@ -1,7 +1,7 @@
 import torch
 import logging
 import pandas as pd
-from typing import Any, Optional
+from typing import Any
 from pydantic import BaseModel
 
 from .models.mlp import MLP
@@ -52,11 +52,11 @@ class Pipeline:
     of processing steps.
 
     Attributes:
-        step_data_loader (Optional[ParquetDataset]): Data loading component
+        step_data_loader (ParquetDataset | None): Data loading component
         step_preprocessing (list[Any]): List of preprocessing steps
         step_feat_extraction (list[Any]): List of feature extraction steps
-        step_model_training (Optional[ModelTrainer]): Model training component
-        step_model_assessment (Optional[ModelAssessment]): Model assessment component
+        step_model_training (ModelTrainer | None): Model training component
+        step_model_assessment (ModelAssessment | None): Model assessment component
     """
 
     def __init__(self, configs: list[BaseModel]):
@@ -69,11 +69,11 @@ class Pipeline:
                                      extraction, training, assessment)
         """
         # Initialize class attributes
-        self.step_data_loader: Optional[ParquetDataset] = None
+        self.step_data_loader: ParquetDataset | None = None
         self.step_preprocessing: list[Any] = []
         self.step_feat_extraction: list[Any] = []
-        self.step_model_training: Optional[ModelTrainer] = None
-        self.step_model_assessment: Optional[ModelAssessment] = None
+        self.step_model_training: ModelTrainer | None = None
+        self.step_model_assessment: ModelAssessment | None = None
 
         self._factory_model(configs)
         self._validate_steps()

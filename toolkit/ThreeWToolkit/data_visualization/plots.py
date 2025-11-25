@@ -1,6 +1,6 @@
 from abc import ABC
 from pathlib import Path
-from typing import Optional, cast
+from typing import cast
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -166,7 +166,7 @@ class DataVisualization(ABC):
 
     @staticmethod
     def correlation_heatmap(
-        df_of_series: pd.DataFrame, ax: Optional[Axes] = None, **kwargs
+        df_of_series: pd.DataFrame, ax: Axes | None = None, **kwargs
     ) -> tuple[Figure, str]:
         """
         Generate a correlation heatmap for multiple time series.
@@ -178,7 +178,7 @@ class DataVisualization(ABC):
         Args:
             df_of_series (pd.DataFrame): DataFrame where each column represents
                 a time series. The correlation will be computed between columns.
-            ax (Optional[Axes], optional): Matplotlib Axes object to draw on.
+            ax (Axes | None, optional): Matplotlib Axes object to draw on.
                 If None, creates new figure and axes. Defaults to None.
             **kwargs: Additional keyword arguments:
                 - title (str): Title for the heatmap. Default: "Correlation Heatmap"
@@ -344,7 +344,7 @@ class DataVisualization(ABC):
                 - "additive": Y(t) = Trend(t) + Seasonal(t) + Residual(t)
                 - "multiplicative": Y(t) = Trend(t) * Seasonal(t) * Residual(t)
                 Defaults to "additive".
-            period (Optional[int], optional): Length of the seasonal period.
+            period (int | None, optional): Length of the seasonal period.
                 If None, attempts to automatically detect the period. For monthly
                 data, use 12; for daily data with weekly patterns, use 7.
 
