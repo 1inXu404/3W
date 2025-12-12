@@ -12,7 +12,6 @@ def create_subplot_grid(
     default_width_per_col: int = 5,
     default_height_per_row: int = 4,
 ) -> tuple[Figure, np.ndarray]:
-
     """
     Create a grid of subplots with consistent sizing and layout.
 
@@ -34,7 +33,7 @@ def create_subplot_grid(
     """
 
     if figsize is None:
-        figsize = (default_width_per_col  * ncols, default_height_per_row * nrows)
+        figsize = (default_width_per_col * ncols, default_height_per_row * nrows)
 
     fig, axes = plt.subplots(nrows, ncols, figsize=figsize)
 

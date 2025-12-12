@@ -109,7 +109,9 @@ class TestPlotSeries:
         """
         Test that a series with only NaN values raises a ValueError.
         """
-        nan_series = pd.Series([np.nan, np.nan, np.nan], index=pd.date_range("2024-01-01", periods=3))
+        nan_series = pd.Series(
+            [np.nan, np.nan, np.nan], index=pd.date_range("2024-01-01", periods=3)
+        )
 
         with pytest.raises(ValueError):
             DataVisualization.plot_series(

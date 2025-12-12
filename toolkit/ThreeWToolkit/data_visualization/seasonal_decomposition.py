@@ -13,7 +13,6 @@ class SeasonalDecompositionPlot(BaseVisualizer):
     and plotting its components (observed, trend, seasonal, residual).
     """
 
-
     def __init__(
         self,
         series: pd.Series,

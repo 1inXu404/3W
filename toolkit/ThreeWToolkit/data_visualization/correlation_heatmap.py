@@ -16,6 +16,7 @@ class CorrelationHeatmap(BaseVisualizer):
     Stores the input DataFrame and optional plotting parameters,
     and provides a `plot()` method that renders the heatmap.
     """
+
     def __init__(
         self,
         df_of_series: pd.DataFrame,
@@ -28,8 +29,8 @@ class CorrelationHeatmap(BaseVisualizer):
         """
         Plot the correlation heatmap.
 
-        If no Axes is provided, a new figure is created.  
-        If the DataFrame is empty, a placeholder message is shown.  
+        If no Axes is provided, a new figure is created.
+        If the DataFrame is empty, a placeholder message is shown.
         If all values are NaN, a ValueError is raised.
 
         Parameters
@@ -67,7 +68,7 @@ class CorrelationHeatmap(BaseVisualizer):
             ax.set_title(title)
             fig.tight_layout()
             return fig, ax
-        
+
         if self.df_of_series.isna().all().all():
             raise ValueError("Series contains only NaN values")
 

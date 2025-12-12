@@ -1,7 +1,6 @@
 from typing import cast
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure

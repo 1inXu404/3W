@@ -15,7 +15,6 @@ class WaveletSpectrogramPlot(BaseVisualizer):
     Generates a synthetic spectrogram for demonstration purposes only.
     """
 
-
     def __init__(
         self,
         series: pd.Series,

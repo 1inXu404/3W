@@ -1,7 +1,6 @@
 from typing import cast
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
@@ -66,11 +65,13 @@ class PlotMultipleSeries(BaseVisualizer):
         colors = [cmap(i) for i in range(len(self.series_list))]
 
         plotted_any = False
-        for i, (series, label) in enumerate(zip(self.series_list, self.labels, strict=True)):
+        for i, (series, label) in enumerate(
+            zip(self.series_list, self.labels, strict=True)
+        ):
             clean_series = series.dropna()
             if clean_series.empty:
                 continue
-            
+
             ax.plot(
                 series.index,
                 series.values,

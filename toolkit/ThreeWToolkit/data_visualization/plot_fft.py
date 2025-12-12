@@ -14,6 +14,7 @@ class PlotFFT(BaseVisualizer):
     Visualizer for computing and plotting the Fast Fourier Transform (FFT)
     of a time series. Supports optional sample rate for frequency scaling.
     """
+
     def __init__(
         self,
         series: pd.Series,
