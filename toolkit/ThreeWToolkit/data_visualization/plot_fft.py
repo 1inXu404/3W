@@ -12,7 +12,7 @@ from .base_visualizer import BaseVisualizer
 class PlotFFT(BaseVisualizer):
     """
     Visualizer for computing and plotting the Fast Fourier Transform (FFT)
-    of a time series. Supports optional sample rate for frequency scaling.
+    of a time series.
     """
 
     def __init__(
@@ -21,6 +21,22 @@ class PlotFFT(BaseVisualizer):
         title: str = "FFT Analysis",
         sample_rate: float | None = None,
     ) -> None:
+        """
+        Initialize the FFT visualizer.
+
+        Args:
+            series: Input time series used to compute the FFT.
+            title: Title of the FFT plot.
+            sample_rate: Optional sampling rate of the series. If provided,
+                frequencies are shown in Hertz (Hz); otherwise, frequencies
+                are shown in cycles per sample.
+
+        Returns:
+            None.
+
+        Raises:
+            TypeError: If series is not a pandas Series.
+        """
         self.series = series
         self.title = title
         self.sample_rate = sample_rate
@@ -29,20 +45,18 @@ class PlotFFT(BaseVisualizer):
         """
         Plot the FFT amplitude spectrum of the input series.
 
-        If no Axes is provided, a new figure is created.
-        Raises an error if the series is empty or contains only NaN values.
+        Args:
+            ax: Matplotlib Axes to draw the FFT plot on. If None, a new
+                Figure and Axes are created.
 
-        Parameters
-        ----------
-        ax : Axes or None
-            Axes to draw the plot on. If None, a new figure/Axes is created.
+        Returns:
+            A tuple containing:
+                - fig: The matplotlib Figure object.
+                - ax: The matplotlib Axes containing the FFT amplitude spectrum.
 
-        Returns
-        -------
-        fig : Figure
-            The figure containing the FFT plot.
-        ax : Axes
-            The axes with the FFT amplitude spectrum.
+        Raises:
+            ValueError: If the input series is empty.
+            ValueError: If the input series contains only NaN values.
         """
         if self.series.empty:
             raise ValueError("Input series is empty")

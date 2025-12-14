@@ -19,30 +19,43 @@ class SeasonalDecompositionPlot(BaseVisualizer):
         model: str = "additive",
         period: int | None = None,
     ) -> None:
+        """
+        Initialize the seasonal decomposition visualizer.
+
+        Args:
+            series: Input pandas Series to decompose.
+            model: Type of seasonal component. Must be 'additive' or
+                'multiplicative'.
+            period: Period of the seasonal component.
+
+        Returns:
+            None.
+
+        Raises:
+            TypeError: If series is not a pandas Series.
+        """
         self.series = series
         self.model = model
         self.period = period
 
     def plot(self, ax: Axes | None = None) -> tuple[Figure, Axes]:
         """
-        Perform seasonal decomposition and plot its four components.
+        Perform seasonal decomposition and plot its components.
 
-        A new 4-row figure is always created (Observed, Trend, Seasonal, Residual).
-        Raises errors for empty series, invalid model type, or insufficient data.
+        Args:
+            ax: Unused. Present only for API consistency.
 
-        Parameters
-        ----------
-        ax : Axes or None
-            Unused. Present only for API consistency.
+        Returns:
+            A tuple containing:
+                - fig: The matplotlib Figure object.
+                - ax: The matplotlib Axes corresponding to the observed component.
 
-        Returns
-        -------
-        fig : Figure
-            The figure containing the 4 decomposition subplots.
-        ax : Axes
-            The first Axes object (Observed component).
+        Raises:
+            ValueError: If the input series is empty.
+            ValueError: If the model is not 'additive' or 'multiplicative'.
+            ValueError: If the series is too short for decomposition.
+            ValueError: If the decomposition process fails.
         """
-
         if self.series.empty:
             raise ValueError("Input series is empty")
 

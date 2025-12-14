@@ -13,25 +13,26 @@ def create_subplot_grid(
     default_height_per_row: int = 4,
 ) -> tuple[Figure, np.ndarray]:
     """
-    Create a grid of subplots with consistent sizing and layout.
+    Create a grid of matplotlib subplots with consistent sizing and layout.
 
-    Parameters
-    ----------
-    nrows : int
-        Number of rows in the subplot grid.
-    ncols : int
-        Number of columns in the subplot grid.
-    figsize : tuple(int, int) or None
-        Figure size (width, height). If None, a default based on grid size is used.
+    Args:
+        nrows: Number of rows in the subplot grid.
+        ncols: Number of columns in the subplot grid.
+        figsize: Optional figure size as (width, height). If None, a default
+            size is computed based on the grid dimensions.
+        default_width_per_col: Default width (in inches) for each column when
+            figsize is not provided.
+        default_height_per_row: Default height (in inches) for each row when
+            figsize is not provided.
 
-    Returns
-    -------
-    fig : Figure
-        The created matplotlib Figure.
-    axes : np.ndarray
-        A 2D array of Axes objects for indexing subplots uniformly.
+    Returns:
+        A tuple containing:
+            - fig: The created matplotlib Figure.
+            - axes: A 2D NumPy array of Axes objects for consistent indexing.
+
+    Raises:
+        ValueError: If nrows or ncols are not positive integers.
     """
-
     if figsize is None:
         figsize = (default_width_per_col * ncols, default_height_per_row * nrows)
 

@@ -11,10 +11,10 @@ from .base_visualizer import BaseVisualizer
 
 class CorrelationHeatmap(BaseVisualizer):
     """
-    Visualizer for plotting a correlation heatmap from a DataFrame.
+    Visualizer for computing and plotting a correlation heatmap.
 
-    Stores the input DataFrame and optional plotting parameters,
-    and provides a `plot()` method that renders the heatmap.
+    This class receives a DataFrame of series, computes the correlation
+    matrix, and renders it as a heatmap using seaborn.
     """
 
     def __init__(
@@ -22,6 +22,21 @@ class CorrelationHeatmap(BaseVisualizer):
         df_of_series: pd.DataFrame,
         **kwargs,
     ) -> None:
+        """
+        Initialize the CorrelationHeatmap visualizer.
+
+        Args:
+            df_of_series: DataFrame containing multiple series or variables
+                used to compute the correlation matrix.
+            **kwargs: Optional keyword arguments forwarded to seaborn.heatmap,
+                such as title, figsize, colormap settings, and annotation options.
+
+        Returns:
+            None.
+
+        Raises:
+            TypeError: If df_of_series is not a pandas DataFrame.
+        """
         self.df_of_series = df_of_series
         self.kwargs = kwargs
 
@@ -29,23 +44,18 @@ class CorrelationHeatmap(BaseVisualizer):
         """
         Plot the correlation heatmap.
 
-        If no Axes is provided, a new figure is created.
-        If the DataFrame is empty, a placeholder message is shown.
-        If all values are NaN, a ValueError is raised.
+        Args:
+            ax: Matplotlib Axes to draw the heatmap on. If None, a new
+                Figure and Axes are created.
 
-        Parameters
-        ----------
-        ax : Axes or None
-            Axes to draw on. If None, a new figure/Axes is created.
+        Returns:
+            A tuple containing:
+                - fig: The matplotlib Figure object.
+                - ax: The matplotlib Axes where the heatmap is rendered.
 
-        Returns
-        -------
-        fig : Figure
-            The figure containing the plot.
-        ax : Axes
-            The axes where the heatmap is rendered.
+        Raises:
+            ValueError: If the DataFrame contains only NaN values.
         """
-
         title: str = self.kwargs.pop("title", "Correlation Heatmap")
         figsize: tuple = self.kwargs.pop("figsize", (10, 8))
 

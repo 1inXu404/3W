@@ -17,4 +17,20 @@ class BaseVisualizer(ABC):
 
     @abstractmethod
     def plot(self, ax: Axes | None = None) -> tuple[Figure, Axes]:
+        """
+        Render the visualization.
+
+        Args:
+            ax: Optional matplotlib Axes to draw on. If None, the implementation
+                must create a new Figure and Axes. If provided, the visualization
+                must be drawn on this Axes.
+
+        Returns:
+            A tuple containing:
+                - fig: The matplotlib Figure object.
+                - ax: The matplotlib Axes where the visualization is rendered.
+
+        Raises:
+            NotImplementedError: If the method is not implemented by a subclass.
+        """
         raise NotImplementedError

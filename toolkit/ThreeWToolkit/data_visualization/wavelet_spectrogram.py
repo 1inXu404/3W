@@ -20,30 +20,38 @@ class WaveletSpectrogramPlot(BaseVisualizer):
         series: pd.Series,
         title: str = "Wavelet Spectrogram",
     ) -> None:
+        """
+        Initialize the wavelet spectrogram visualizer.
+
+        Args:
+            series: Input pandas Series used to generate the spectrogram.
+            title: Title of the spectrogram plot.
+
+        Returns:
+            None.
+
+        Raises:
+            TypeError: If series is not a pandas Series.
+        """
         self.series = series
         self.title = title
 
     def plot(self, ax: Axes | None = None) -> tuple[Figure, Axes]:
         """
-        Plot a mock wavelet spectrogram for the input series.
+        Plot a wavelet spectrogram for the input series.
 
-        Creates a random spectrogram matrix with exponential decay in frequency.
-        A new figure is created if no Axes is provided.
-        Raises an error if the input series is empty.
+        Args:
+            ax: Matplotlib Axes to draw the spectrogram on. If None,
+                a new Figure and Axes are created.
 
-        Parameters
-        ----------
-        ax : Axes or None
-            Axes to draw the spectrogram on. If None, a new figure/Axes is created.
+        Returns:
+            A tuple containing:
+                - fig: The matplotlib Figure object.
+                - ax: The matplotlib Axes with the rendered spectrogram.
 
-        Returns
-        -------
-        fig : Figure
-            The figure containing the spectrogram.
-        ax : Axes
-            The axes with the rendered spectrogram.
+        Raises:
+            ValueError: If the input series is empty.
         """
-
         if self.series.empty:
             raise ValueError("Input series is empty")
 

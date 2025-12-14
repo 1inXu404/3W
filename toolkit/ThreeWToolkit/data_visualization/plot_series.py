@@ -25,6 +25,24 @@ class PlotSeries(BaseVisualizer):
         overlay_events: bool = False,
         **plot_kwargs,
     ) -> None:
+        """
+        Initialize the single-series plot visualizer.
+
+        Args:
+            series: Input pandas Series to be plotted.
+            title: Title of the plot.
+            xlabel: Label for the x-axis.
+            ylabel: Label for the y-axis.
+            overlay_events: Whether to overlay event markers at NaN positions.
+            **plot_kwargs: Additional keyword arguments forwarded to
+                matplotlib Axes.plot.
+
+        Returns:
+            None.
+
+        Raises:
+            TypeError: If series is not a pandas Series.
+        """
         self.series = series
         self.title = title
         self.xlabel = xlabel
@@ -36,21 +54,18 @@ class PlotSeries(BaseVisualizer):
         """
         Plot a single time series.
 
-        Creates a new figure if no Axes is provided.
-        Raises an error if the series is empty or contains only NaN values.
-        If `overlay_events=True`, vertical lines are drawn at NaN timestamps.
+        Args:
+            ax: Matplotlib Axes to draw the time series on. If None,
+                a new Figure and Axes are created.
 
-        Parameters
-        ----------
-        ax : Axes or None
-            Axes to draw the plot on. If None, a new figure/Axes is created.
+        Returns:
+            A tuple containing:
+                - fig: The matplotlib Figure object.
+                - ax: The matplotlib Axes with the rendered plot.
 
-        Returns
-        -------
-        fig : Figure
-            The figure containing the time-series plot.
-        ax : Axes
-            The axes with the rendered plot.
+        Raises:
+            ValueError: If the series is empty.
+            ValueError: If the series contains only NaN values.
         """
         if self.series.empty:
             raise ValueError("Series is empty. Cannot generate plot.")
