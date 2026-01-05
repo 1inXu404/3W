@@ -1,8 +1,8 @@
 [project]
 name = "ThreeWToolkit"
-version = "2.0.0"
+version = "2.0.1"
 description = "A modular and open-source AI toolkit for time-series processing, aimed at fault detection and classification in oil well operation"
-readme = "toolkit/README.md"
+readme = "toolkit/ThreeWToolkit/README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.10"
 dependencies = [
@@ -52,12 +52,12 @@ docs = [
     "sphinx",
 ]
 
-[tool.setuptools.packages.find]
-where = ["toolkit"]
+[tool.hatch.build.targets.wheel]
+packages = ["toolkit/ThreeWToolkit"]
 
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.coverage.run]
 source = ["toolkit/"]

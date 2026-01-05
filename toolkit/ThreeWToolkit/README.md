@@ -7,7 +7,7 @@
 [black]: https://github.com/psf/black
 [black-shield]: https://img.shields.io/badge/code%20style-black-000000.svg
 [semver]: https://semver.org
-[semver-shield]: https://img.shields.io/badge/semver-2.0.0-blue
+[semver-shield]: https://img.shields.io/badge/semver-2.0.1-blue
 
 <h1>
   <img src="../../images/3w_logo.png" width="45" style="vertical-align: middle; margin-right: 10px;" />
