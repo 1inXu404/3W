@@ -45,7 +45,9 @@ class TestFigshareURLS:
                 metadata = json.loads(known_files.text)
                 metadata_dict[version] = metadata
             except requests.exceptions.HTTPError as http_err:
-                warnings.warn(f"Failed to fetch metadata for version {version}: {http_err}")
+                warnings.warn(
+                    f"Failed to fetch metadata for version {version}: {http_err}"
+                )
                 pytest.skip(f"Skipping tests for version {version} due to HTTP error.")
             except Exception as e:
                 pytest.fail(f"Failed to fetch metadata for version {version}: {e}")
