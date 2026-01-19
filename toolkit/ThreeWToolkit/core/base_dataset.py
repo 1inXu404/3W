@@ -20,7 +20,7 @@ class ParquetDatasetConfig(BaseModel):
         default=None,
         description='List of files to load if split=="list". Must be explicitly provided.',
     )
-    event_type: list[EventPrefixEnum] | None = Field(
+    event_type: list[EventPrefixEnum] | list[str] | None = Field(
         default=None,
         description="Event types to include. (e.g., simulated, real, ...)",
     )
@@ -80,11 +80,14 @@ class ParquetDatasetConfig(BaseModel):
     @classmethod
     def validate_event_type(cls, v):
         """
-        Ensure that all event types are valid members of EventPrefixEnum.
+        Ensure that all event types are valid string values of EventPrefixEnum.
         Raise a ValueError if an unknown type is provided.
         """
         if v is not None:
+            valid_strs = {e.value for e in EventPrefixEnum}
+            if not isinstance(v, list) or not all(isinstance(t, str) for t in v):
+                raise TypeError("event_type must be a list of str.")
             for t in v:
-                if t not in list(EventPrefixEnum):
+                if t not in valid_strs:
                     raise ValueError(f"Unknown event_type: {t}")
         return v
