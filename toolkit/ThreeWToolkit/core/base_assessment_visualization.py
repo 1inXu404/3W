@@ -10,6 +10,18 @@ class AssessmentVisualizationConfig(BaseModel):
     @field_validator("class_names")
     @classmethod
     def validate_class_names(cls, v):
+        """
+        Validate that the provided class names are valid.
+
+        Args:
+            v (list[str] | None): List of class names to validate.
+
+        Returns:
+            list[str] | None: Validated list of class names or None.
+
+        Raises:
+            ValueError: If the list is empty or contains non-string elements.
+        """
         if v is None:
             return v
         if not isinstance(v, list) or len(v) == 0:

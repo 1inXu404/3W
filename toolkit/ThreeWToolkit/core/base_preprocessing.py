@@ -41,6 +41,18 @@ class WindowingConfig(BaseModel):
 
     @field_validator("window")
     def validate_window(cls, v):
+        """
+        Validate that the window configuration is correct.
+
+        Args:
+            v (str | tuple): Window name or tuple of (name, parameter).
+
+        Returns:
+            str | tuple: Validated window configuration.
+
+        Raises:
+            ValueError: If window name is invalid or required parameters are missing.
+        """
         WINDOWS_WITH_REQUIRED_PARAMS = {
             "kaiser": 1,
             "kaiser_bessel_derived": 1,
