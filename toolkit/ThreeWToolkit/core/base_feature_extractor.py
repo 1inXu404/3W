@@ -86,16 +86,16 @@ class StatisticalConfig(
 
     @field_validator("selected_features")
     @classmethod
-    def validate_selected_features(cls, v):
+    def validate_selected_features(cls: type["StatisticalConfig"], selected_features: list[str] | None) -> list[str] | None:
         """Validates that selected features are available."""
-        if v is not None:
-            invalid_features = set(v) - set(cls.AVAILABLE_FEATURES)
+        if selected_features is not None:
+            invalid_features = set(selected_features) - set(cls.AVAILABLE_FEATURES)
             if invalid_features:
                 raise ValueError(
                     f"Invalid features: {invalid_features}. "
                     f"Available features: {cls.AVAILABLE_FEATURES}"
                 )
-        return v
+        return selected_features
 
 
 class EWStatisticalConfig(
@@ -131,16 +131,16 @@ class EWStatisticalConfig(
 
     @field_validator("selected_features")
     @classmethod
-    def validate_selected_features(cls, v):
+    def validate_selected_features(cls: type["EWStatisticalConfig"], selected_features: list[str] | None) -> list[str] | None:
         """Validates that selected features are available."""
-        if v is not None:
-            invalid_features = set(v) - set(cls.AVAILABLE_FEATURES)
+        if selected_features is not None:
+            invalid_features = set(selected_features) - set(cls.AVAILABLE_FEATURES)
             if invalid_features:
                 raise ValueError(
                     f"Invalid features: {invalid_features}. "
                     f"Available features: {cls.AVAILABLE_FEATURES}"
                 )
-        return v
+        return selected_features
 
 
 class WaveletConfig(OverlapOffsetMixin, FeatureSelectionMixin):
