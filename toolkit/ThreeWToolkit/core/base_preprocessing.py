@@ -12,11 +12,12 @@ class ImputeMissingConfig(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     @field_validator("fill_value")
-    def check_fill_value_for_constant(cls, value, info: ValidationInfo):
+    @classmethod
+    def check_fill_value_for_constant(cls: type["ImputeMissingConfig"], fill_value: int | float | None, info: ValidationInfo) -> int | float | None:
         strategy = info.data.get("strategy")
-        if strategy == "constant" and value is None:
+        if strategy == "constant" and fill_value is None:
             raise ValueError("You must provide `fill_value` when strategy='constant'")
-        return value
+        return fill_value
 
 
 class NormalizeConfig(BaseModel):
@@ -40,12 +41,13 @@ class WindowingConfig(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     @field_validator("window")
-    def validate_window(cls, v):
+    @classmethod
+    def validate_window(cls: type["WindowingConfig"], window: str | tuple) -> str | tuple:
         """
         Validate that the window configuration is correct.
 
         Args:
-            v (str | tuple): Window name or tuple of (name, parameter).
+            window (str | tuple): Window name or tuple of (name, parameter).
 
         Returns:
             str | tuple: Validated window configuration.
@@ -88,20 +90,20 @@ class WindowingConfig(BaseModel):
             set(WINDOWS_WITH_REQUIRED_PARAMS) | WINDOWS_WITH_OPTIONAL_OR_NO_PARAMS
         )
 
-        if isinstance(v, str):
-            if v not in ALL_WINDOW_NAMES:
-                raise ValueError(f"Invalid window name '{v}'.")
-            if v in WINDOWS_WITH_REQUIRED_PARAMS:
+        if isinstance(window, str):
+            if window not in ALL_WINDOW_NAMES:
+                raise ValueError(f"Invalid window name '{window}'.")
+            if window in WINDOWS_WITH_REQUIRED_PARAMS:
                 raise ValueError(
-                    f"Window '{v}' requires parameter(s); use a tuple like ('{v}', param)."
+                    f"Window '{window}' requires parameter(s); use a tuple like ('{window}', param)."
                 )
 
         else:
-            if len(v) == 0 or not isinstance(v[0], str):
+            if len(window) == 0 or not isinstance(window[0], str):
                 raise ValueError("Tuple window must start with a string window name.")
 
-            name = v[0]
-            params = v[1:]
+            name = window[0]
+            params = window[1:]
 
             if name not in ALL_WINDOW_NAMES:
                 raise ValueError(f"Unknown window name '{name}'.")
@@ -113,7 +115,7 @@ class WindowingConfig(BaseModel):
                         f"Window '{name}' requires {expected} parameter(s), got {len(params)}."
                     )
 
-        return v
+        return window
 
 
 class RenameColumnsConfig(BaseModel):
@@ -121,7 +123,8 @@ class RenameColumnsConfig(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     @field_validator("columns_map")
-    def validate_columns_exist(cls, columns_map: dict[str, str], info: ValidationInfo):
+    @classmethod
+    def validate_columns_exist(cls: type["RenameColumnsConfig"], columns_map: dict[str, str], info: ValidationInfo) -> dict[str, str]:
         """
         Validate that all columns to be renamed exist in the DataFrame.
 
@@ -144,7 +147,8 @@ class RenameColumnsConfig(BaseModel):
         return columns_map
 
     @field_validator("columns_map")
-    def validate_unique_new_column_names(cls, columns_map: dict[str, str]):
+    @classmethod
+    def validate_unique_new_column_names(cls: type["RenameColumnsConfig"], columns_map: dict[str, str]) -> dict[str, str]:
         """
         Validate that new column names are unique.
 
