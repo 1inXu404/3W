@@ -46,7 +46,7 @@ class ModelRecorder:
 
     @staticmethod
     def load_model(
-        filename: str | Path, model: Module | None = None
+        filename: str | Path, model: Module | BaseEstimator | None = None
     ) -> Module | dict | BaseEstimator:
         """
         Load a model from disk depending on its type and file extension.
