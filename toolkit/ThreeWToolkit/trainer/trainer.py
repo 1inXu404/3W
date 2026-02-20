@@ -750,9 +750,7 @@ class ModelTrainer(BaseStep):
             For PyTorch models, this loads the state dict. For scikit-learn
             models, this loads the entire model state.
         """
-        model = ModelRecorder.load_model(filename=filepath, model=self.model)
-        assert isinstance(model, (MLP, SklearnModels))
-        return model
+        return ModelRecorder.load_model(filename=filepath, model=self.model)
 
     def assess(
         self,
