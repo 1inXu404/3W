@@ -31,8 +31,10 @@ class ModelRecorder:
         if ext in [".pt", ".pth"]:
             try:
                 import torch
+                from ..models.mlp import MLP
 
-                torch.save(model.state_dict(), filename)  # type: ignore[union-attr]
+                if isinstance(model, MLP):
+                    torch.save(model.state_dict(), filename)
             except Exception as e:
                 raise RuntimeError(f"Error saving PyTorch model: {e}")
 
@@ -73,11 +75,13 @@ class ModelRecorder:
         if ext in [".pt", ".pth"]:
             try:
                 import torch
+                from ..models.mlp import MLP
 
                 if model is None:
                     return torch.load(filename)
                 state_dict = torch.load(filename)
-                model.load_state_dict(state_dict)  # type: ignore[union-attr]
+                if isinstance(model, MLP):
+                    model.load_state_dict(state_dict)
                 return model
             except Exception as e:
                 raise RuntimeError(f"Error loading PyTorch model: {e}")

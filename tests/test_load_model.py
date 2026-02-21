@@ -6,19 +6,20 @@ from collections import OrderedDict
 
 import pytest
 import torch
-import torch.nn as nn
 import sklearn.linear_model
 
 from ThreeWToolkit.utils import ModelRecorder
+from ThreeWToolkit.models.mlp import MLP, MLPConfig
 
 
-class SimpleTorchModel(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.linear = nn.Linear(10, 1)
-
-    def forward(self, x):
-        return self.linear(x)
+def make_mlp() -> MLP:
+    config = MLPConfig(
+        input_size=10,
+        hidden_sizes=(8,),
+        output_size=1,
+        random_seed=42,
+    )
+    return MLP(config)
 
 
 class TestModelRecorderLoad:
@@ -26,7 +27,7 @@ class TestModelRecorderLoad:
         """
         Setup simple models for each supported framework.
         """
-        self.torch_model = SimpleTorchModel()
+        self.torch_model = make_mlp()
         self.sklearn_model = sklearn.linear_model.LogisticRegression()
 
     def _save_torch_state_dict_to_tmp(self):
@@ -48,9 +49,9 @@ class TestModelRecorderLoad:
         """
         path = self._save_torch_state_dict_to_tmp()
         try:
-            fresh_model = SimpleTorchModel()
+            fresh_model = make_mlp()
             loaded = ModelRecorder.load_model(path, model=fresh_model)
-            assert isinstance(loaded, SimpleTorchModel)
+            assert isinstance(loaded, MLP)
 
             # Compare parameters elementwise
             for p_loaded, p_saved in zip(
@@ -89,7 +90,7 @@ class TestModelRecorderLoad:
         path = self._save_torch_state_dict_to_tmp()
         try:
             with pytest.raises(RuntimeError, match="Error loading PyTorch model"):
-                ModelRecorder.load_model(path, model=SimpleTorchModel())
+                ModelRecorder.load_model(path, model=make_mlp())
         finally:
             os.remove(path)
 
@@ -142,7 +143,7 @@ class TestModelRecorderLoad:
 
     def test_load_file_like_object_not_supported(self):
         """
-        Passing a file-like object raises ValueError.
+        Passing a file-like object raises TypeError.
         """
         fake_file = BytesIO()
         with pytest.raises(
@@ -175,6 +176,6 @@ class TestModelRecorderLoad:
             tmp_path = tmp.name
         try:
             with pytest.raises(RuntimeError, match="Error loading PyTorch model"):
-                ModelRecorder.load_model(tmp_path, model=SimpleTorchModel())
+                ModelRecorder.load_model(tmp_path, model=make_mlp())
         finally:
             os.remove(tmp_path)
